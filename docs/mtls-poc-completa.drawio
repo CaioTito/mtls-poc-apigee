@@ -91,7 +91,7 @@
         <mxCell id="a9" edge="1" parent="1" source="f5n1" style="edgeStyle=orthogonalEdgeStyle;" target="f5n2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="f5n2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAEEDA;strokeColor=#854F0B;fontColor=#412402;fontSize=12;arcSize=8;" value="&lt;b&gt;⚠️ VM na mesma VPC — necessária para chamar o Apigee privado&lt;/b&gt;&lt;br&gt;Compute Engine → Criar VM → e2-micro → região southamerica-east1 → VPC default&lt;br&gt;O Apigee X trial não tem hostname público — só acessível por IP interno (10.83.172.2) dentro da VPC&lt;br&gt;❌ Não necessário em produção — sua API já estará na mesma VPC" vertex="1">
+        <mxCell id="f5n2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAEEDA;strokeColor=#854F0B;fontColor=#412402;fontSize=12;arcSize=8;" value="&lt;b&gt;⚠️ VM na mesma VPC — necessária para chamar o Apigee privado&lt;/b&gt;&lt;br&gt;Compute Engine → Criar VM → e2-micro → região southamerica-east1 → VPC default&lt;br&gt;O Apigee X trial não tem hostname público — só acessível por IP interno (&lt;APIGEE_INTERNAL_IP&gt;) dentro da VPC&lt;br&gt;❌ Não necessário em produção — sua API já estará na mesma VPC" vertex="1">
           <mxGeometry height="72" width="800" x="50" y="1044" as="geometry" />
         </mxCell>
         <mxCell id="a10" edge="1" parent="1" source="f5n2" style="edgeStyle=orthogonalEdgeStyle;" target="f6h">
@@ -103,7 +103,7 @@
         <mxCell id="f6h" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#3B6D11;" value="FASE 6 — Validação" vertex="1">
           <mxGeometry height="24" width="800" x="50" y="1170" as="geometry" />
         </mxCell>
-        <mxCell id="f6n1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF3DE;strokeColor=#3B6D11;fontColor=#173404;fontSize=12;arcSize=8;" value="&lt;b&gt;Via SSH na VM — curl para o IP privado do Apigee&lt;/b&gt;&lt;br&gt;curl -vk https://10.83.172.2/mtls/hello -H &quot;Host: SEU-HOSTNAME.dns-replaceme.example.com&quot;&lt;br&gt;⚠️ Descobrir o hostname em: Apigee → Administração → Environment Groups" vertex="1">
+        <mxCell id="f6n1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF3DE;strokeColor=#3B6D11;fontColor=#173404;fontSize=12;arcSize=8;" value="&lt;b&gt;Via SSH na VM — curl para o IP privado do Apigee&lt;/b&gt;&lt;br&gt;curl -vk https://&lt;APIGEE_INTERNAL_IP&gt;/mtls/hello -H &quot;Host: SEU-HOSTNAME.dns-replaceme.example.com&quot;&lt;br&gt;⚠️ Descobrir o hostname em: Apigee → Administração → Environment Groups" vertex="1">
           <mxGeometry height="66" width="800" x="50" y="1200" as="geometry" />
         </mxCell>
         <mxCell id="res1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;arcSize=8;" value="&lt;b&gt;✅ Sucesso — HTTP 200&lt;/b&gt;&lt;br&gt;clientCertSubject preenchido com CN=my-client&lt;br&gt;Apigee apresentou o certificado ao server" vertex="1">

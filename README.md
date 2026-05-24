@@ -1,12 +1,12 @@
 # POC mTLS — Apigee X Privado
 
-Prova de conceito de **mTLS (mutual TLS)** usando Apigee X como proxy, simulando o cenário real em que um proxy corporativo chama uma API externa com autenticação mútua por certificado — padrão exigido em integrações como Open Finance / BB.
+Prova de conceito de **mTLS (mutual TLS)** usando Apigee X como proxy, simulando o cenário real de ambientes **zero trust** em que toda comunicação entre serviços exige autenticação mútua por certificado — sem depender de rede privada ou IP de origem como garantia de identidade.
 
 ## Fluxo validado
 
 ```
 VM (GCP, mesma VPC)
-  → Apigee X privado (IP interno 10.83.172.2)
+  → Apigee X privado (IP interno <APIGEE_INTERNAL_IP>)
     → Cloud NAT
       → ngrok TCP
         → MtlsServer .NET (localhost:5000)
@@ -202,7 +202,7 @@ O Apigee X trial usa apenas IPs privados — sem Cloud NAT ele não consegue faz
 
 ### 5b. VM na mesma VPC (necessária apenas no trial)
 
-O Apigee X trial não expõe hostname público — só é acessível pelo IP interno `10.83.172.2` dentro da VPC.
+O Apigee X trial não expõe hostname público — só é acessível pelo IP interno `<APIGEE_INTERNAL_IP>` dentro da VPC.
 
 1. **Compute Engine → Criar instância de VM**
 2. Nome: `teste-apiproxy`
@@ -219,7 +219,7 @@ O Apigee X trial não expõe hostname público — só é acessível pelo IP int
 Acesse a VM via SSH e execute:
 
 ```bash
-curl -vk https://10.83.172.2/mtls/hello \
+curl -vk https://<APIGEE_INTERNAL_IP>/mtls/hello \
   -H "Host: SEU-HOSTNAME.dns-replaceme.example.com"
 ```
 
