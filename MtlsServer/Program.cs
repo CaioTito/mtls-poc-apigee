@@ -13,9 +13,6 @@ builder.WebHost.ConfigureKestrel(options =>
             httpsOptions.ServerCertificate = X509CertificateLoader.LoadPkcs12FromFile(certPath, "senha123");
 
             httpsOptions.ClientCertificateMode = ClientCertificateMode.RequireCertificate;
-
-            // POC: aceita qualquer certificado cliente. Em produção, validar emissor,
-            // CN e validade antes de retornar true.
             httpsOptions.ClientCertificateValidation = (certificate, chain, errors) => true;
         });
     });
