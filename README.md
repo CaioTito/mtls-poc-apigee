@@ -110,7 +110,7 @@ dotnet run
 
 O Kestrel sobe na porta `5000` com HTTPS, exigindo certificado cliente (`ClientCertificateMode = RequireCertificate`).
 
-**Endpoint disponível:** `GET /hello`
+**Endpoint disponível:** `GET /` (raiz — o Apigee faz strip do BasePath `/mtls` antes de encaminhar)
 
 Resposta de exemplo:
 
@@ -219,7 +219,7 @@ O Apigee X trial não expõe hostname público — só é acessível pelo IP int
 Acesse a VM via SSH e execute:
 
 ```bash
-curl -vk https://<APIGEE_INTERNAL_IP>/mtls/hello \
+curl -vk https://<APIGEE_INTERNAL_IP>/mtls \
   -H "Host: SEU-HOSTNAME.dns-replaceme.example.com"
 ```
 
@@ -242,7 +242,7 @@ curl -vk https://<APIGEE_INTERNAL_IP>/mtls/hello \
 | Sintoma | Causa provável | Solução |
 |---|---|---|
 | `SSL Handshake failed: No name matching 0.tcp.sa.ngrok.io found` | SAN ausente no `server.pfx` | Regerar o `server.pfx` com `gerar-certificados-server.sh` que inclui o SAN |
-| `404` no path | Apigee faz strip do BasePath antes de repassar ao backend | Usar `/hello` no servidor, sem o prefixo `/mtls` |
+| `404` no path | Apigee faz strip do BasePath antes de repassar ao backend | Servidor deve expor `/` (raiz), não `/mtls` |
 | `503 SSL Handshake failed` | Cloud NAT ausente ou URL do ngrok desatualizada no Target | Verificar Cloud NAT ativo e atualizar a porta do ngrok no Target Endpoint |
 | `Connection refused` na porta 80 | Apigee só aceita HTTPS (443) | Usar `https://` na URL do Target |
 | `404` sem mensagem de erro do proxy | Header `Host` incorreto | Verificar o hostname do Environment Group no Apigee Console |

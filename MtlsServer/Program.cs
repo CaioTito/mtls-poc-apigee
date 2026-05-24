@@ -23,7 +23,7 @@ builder.WebHost.ConfigureKestrel(options =>
 
 var app = builder.Build();
 
-app.MapGet("/hello", (HttpContext context) =>
+app.MapGet("/", (HttpContext context) =>
 {
     var clientCertificate = context.Connection.ClientCertificate;
 

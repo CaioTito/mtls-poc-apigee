@@ -3,7 +3,7 @@
   Proxy Endpoint — define o BasePath público do proxy.
 
   O Apigee faz strip do BasePath antes de encaminhar ao backend,
-  portanto o servidor .NET expõe apenas /hello (sem /mtls).
+  portanto o servidor .NET expõe apenas / (raiz) — o cliente chama /mtls no Apigee.
 -->
 <ProxyEndpoint name="default">
     <HTTPProxyConnection>
