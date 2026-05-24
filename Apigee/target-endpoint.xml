@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  Target Endpoint — mTLS de saída: Apigee apresenta client.pfx ao servidor.
+
+  Substitua PORTA pela porta TCP gerada pelo ngrok (ex: 12345).
+  Use o nome direto do keystore (não o nome de uma Reference).
+-->
+<TargetEndpoint name="default">
+    <HTTPTargetConnection>
+        <URL>https://0.tcp.sa.ngrok.io:PORTA</URL>
+        <SSLInfo>
+            <!-- Habilita TLS na conexão com o backend -->
+            <Enabled>true</Enabled>
+
+            <!-- Habilita mTLS: o Apigee apresenta o certificado cliente -->
+            <ClientAuthEnabled>true</ClientAuthEnabled>
+
+            <!-- Keystore com o client.pfx (certificado que o Apigee apresenta) -->
+            <KeyStore>keystore-teste</KeyStore>
+            <KeyAlias>cert-teste</KeyAlias>
+
+            <!-- Truststore com ca.cert (para o Apigee confiar no server.pfx) -->
+            <TrustStore>truststore-teste</TrustStore>
+
+            <!-- Manter false em produção para validar o certificado do servidor -->
+            <IgnoreValidationErrors>false</IgnoreValidationErrors>
+        </SSLInfo>
+    </HTTPTargetConnection>
+</TargetEndpoint>

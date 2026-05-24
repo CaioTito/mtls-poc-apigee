@@ -1,0 +1,118 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="mTLS POC Completa" id="mtls-poc">
+    <mxGraphModel dx="1004" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1a1a2e;" value="POC mTLS — Apigee X Privado" vertex="1">
+          <mxGeometry height="36" width="800" x="50" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#555555;" value="Fluxo validado: VM → Apigee (privado) → Cloud NAT → ngrok TCP → MtlsServer .NET" vertex="1">
+          <mxGeometry height="22" width="800" x="50" y="54" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontSize=11;" value="✅ Essencial" vertex="1">
+          <mxGeometry height="28" width="120" x="50" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAEEDA;strokeColor=#854F0B;fontColor=#412402;fontSize=11;" value="⚠️ Custo baixo" vertex="1">
+          <mxGeometry height="28" width="120" x="182" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F1FB;strokeColor=#185FA5;fontColor=#042C53;fontSize=11;" value="🆓 Gratuito" vertex="1">
+          <mxGeometry height="28" width="120" x="314" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#999999;fontColor=#666666;fontSize=11;" value="❌ Não necessário" vertex="1">
+          <mxGeometry height="28" width="150" x="446" y="86" as="geometry" />
+        </mxCell>
+        <mxCell id="f1h" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#0F6E56;" value="FASE 1 — Preparar os certificados (local)" vertex="1">
+          <mxGeometry height="24" width="800" x="50" y="132" as="geometry" />
+        </mxCell>
+        <mxCell id="f1n1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F1FB;strokeColor=#185FA5;fontColor=#042C53;fontSize=12;arcSize=8;" value="&lt;b&gt;🆓 Instalar OpenSSL&lt;/b&gt;&lt;br&gt;Já incluso no Git Bash — sem instalação adicional&lt;br&gt;Confirmar: openssl version" vertex="1">
+          <mxGeometry height="54" width="800" x="50" y="162" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" edge="1" parent="1" source="f1n1" style="edgeStyle=orthogonalEdgeStyle;" target="f1n2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f1n2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F1FB;strokeColor=#185FA5;fontColor=#042C53;fontSize=12;arcSize=8;" value="&lt;b&gt;🆓 Gerar os certificados com o script .sh (Git Bash)&lt;/b&gt;&lt;br&gt;ca.key + ca.cert → server.key + server.csr + server.cert + server.pfx (com SAN do ngrok) → client.key + client.csr + client.cert + client.pfx&lt;br&gt;⚠️ server.pfx precisa ter SAN com o hostname do ngrok TCP (DNS.1 = 0.tcp.sa.ngrok.io)" vertex="1">
+          <mxGeometry height="72" width="800" x="50" y="236" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" edge="1" parent="1" source="f1n2" style="edgeStyle=orthogonalEdgeStyle;" target="f2h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f2h" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#0F6E56;" value="FASE 2 — Configurar o MtlsServer .NET (local)" vertex="1">
+          <mxGeometry height="24" width="800" x="50" y="328" as="geometry" />
+        </mxCell>
+        <mxCell id="f2n1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F1FB;strokeColor=#185FA5;fontColor=#042C53;fontSize=12;arcSize=8;" value="&lt;b&gt;🆓 Criar projeto .NET WebAPI mínimo&lt;/b&gt;&lt;br&gt;Configurar Kestrel com HTTPS + server.pfx como ServerCertificate&lt;br&gt;ClientCertificateMode = RequireCertificate · ClientCertificateValidation retorna true (para testes)&lt;br&gt;MapGet(&amp;quot;/hello&amp;quot;) — sem o prefixo /mtls (o Apigee faz strip do BasePath)" vertex="1">
+          <mxGeometry height="72" width="800" x="50" y="358" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" edge="1" parent="1" source="f2n1" style="edgeStyle=orthogonalEdgeStyle;" target="f3h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f3h" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#0F6E56;" value="FASE 3 — Expor o server com ngrok TCP (local)" vertex="1">
+          <mxGeometry height="24" width="800" x="50" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="f3n1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F1FB;strokeColor=#185FA5;fontColor=#042C53;fontSize=12;arcSize=8;" value="&lt;b&gt;🆓 Subir ngrok com TCP (não HTTP!)&lt;/b&gt;&lt;br&gt;ngrok tcp 5000&lt;br&gt;⚠️ Usar TCP e não HTTP — o ngrok HTTP termina o TLS e quebra o mTLS&lt;br&gt;Anotar a URL gerada: tcp://0.tcp.sa.ngrok.io:PORTA → usar essa porta no Target do Apigee" vertex="1">
+          <mxGeometry height="72" width="800" x="50" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" edge="1" parent="1" source="f3n1" style="edgeStyle=orthogonalEdgeStyle;" target="f4h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f4h" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#854F0B;" value="FASE 4 — Configurar o Apigee X" vertex="1">
+          <mxGeometry height="24" width="800" x="50" y="572" as="geometry" />
+        </mxCell>
+        <mxCell id="f4n1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;arcSize=8;" value="&lt;b&gt;✅ Criar Keystore com client.pfx&lt;/b&gt;&lt;br&gt;Ambientes → TLS Keystores → Criar keystore (ex: keystore-teste)&lt;br&gt;Adicionar alias → tipo PKCS12/PFX → upload client.pfx + senha → alias (ex: cert-teste)" vertex="1">
+          <mxGeometry height="60" width="800" x="50" y="602" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" edge="1" parent="1" source="f4n1" style="edgeStyle=orthogonalEdgeStyle;" target="f4n2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f4n2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;arcSize=8;" value="&lt;b&gt;✅ Criar Truststore com ca.cert&lt;/b&gt;&lt;br&gt;TLS Keystores → Criar keystore (ex: truststore-teste)&lt;br&gt;Adicionar alias → tipo Somente certificado → upload ca.cert → alias (ex: ca-teste)" vertex="1">
+          <mxGeometry height="60" width="800" x="50" y="682" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" edge="1" parent="1" source="f4n2" style="edgeStyle=orthogonalEdgeStyle;" target="f4n3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f4n3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;arcSize=8;" value="&lt;b&gt;✅ Configurar Target endpoint do proxy&lt;/b&gt;&lt;br&gt;URL: https://0.tcp.sa.ngrok.io:PORTA · SSLInfo: Enabled=true · ClientAuthEnabled=true&lt;br&gt;KeyStore=keystore-teste · KeyAlias=cert-teste · TrustStore=truststore-teste&lt;br&gt;⚠️ Usar nome direto do keystore no Target — não o nome da Reference" vertex="1">
+          <mxGeometry height="72" width="800" x="50" y="762" as="geometry" />
+        </mxCell>
+        <mxCell id="a7" edge="1" parent="1" source="f4n3" style="edgeStyle=orthogonalEdgeStyle;" target="f4n4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f4n4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;arcSize=8;" value="&lt;b&gt;✅ Salvar como nova revisão e implantar&lt;/b&gt;&lt;br&gt;Salvar → Implantar → confirmar &quot;Deployed&quot; sem erros de validação" vertex="1">
+          <mxGeometry height="54" width="800" x="50" y="854" as="geometry" />
+        </mxCell>
+        <mxCell id="a8" edge="1" parent="1" source="f4n4" style="edgeStyle=orthogonalEdgeStyle;" target="f5h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f5h" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#854F0B;" value="FASE 5 — Infraestrutura GCP (necessária para o Apigee privado)" vertex="1">
+          <mxGeometry height="24" width="800" x="50" y="928" as="geometry" />
+        </mxCell>
+        <mxCell id="f5n1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAEEDA;strokeColor=#854F0B;fontColor=#412402;fontSize=12;arcSize=8;" value="&lt;b&gt;⚠️ Cloud NAT — necessário para o Apigee alcançar a internet&lt;/b&gt;&lt;br&gt;Network Services → Cloud NAT → Criar → região southamerica-east1 → criar Cloud Router junto&lt;br&gt;Sem isso o Apigee não consegue chamar o ngrok (recursos privados sem IP público não têm saída para internet)" vertex="1">
+          <mxGeometry height="66" width="800" x="50" y="958" as="geometry" />
+        </mxCell>
+        <mxCell id="a9" edge="1" parent="1" source="f5n1" style="edgeStyle=orthogonalEdgeStyle;" target="f5n2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f5n2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAEEDA;strokeColor=#854F0B;fontColor=#412402;fontSize=12;arcSize=8;" value="&lt;b&gt;⚠️ VM na mesma VPC — necessária para chamar o Apigee privado&lt;/b&gt;&lt;br&gt;Compute Engine → Criar VM → e2-micro → região southamerica-east1 → VPC default&lt;br&gt;O Apigee X trial não tem hostname público — só acessível por IP interno (10.83.172.2) dentro da VPC&lt;br&gt;❌ Não necessário em produção — sua API já estará na mesma VPC" vertex="1">
+          <mxGeometry height="72" width="800" x="50" y="1044" as="geometry" />
+        </mxCell>
+        <mxCell id="a10" edge="1" parent="1" source="f5n2" style="edgeStyle=orthogonalEdgeStyle;" target="f6h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a11" edge="1" parent="1" source="f5n2" style="edgeStyle=orthogonalEdgeStyle;" target="f6h">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f6h" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=13;fontStyle=1;fontColor=#3B6D11;" value="FASE 6 — Validação" vertex="1">
+          <mxGeometry height="24" width="800" x="50" y="1170" as="geometry" />
+        </mxCell>
+        <mxCell id="f6n1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EAF3DE;strokeColor=#3B6D11;fontColor=#173404;fontSize=12;arcSize=8;" value="&lt;b&gt;Via SSH na VM — curl para o IP privado do Apigee&lt;/b&gt;&lt;br&gt;curl -vk https://10.83.172.2/mtls/hello -H &quot;Host: SEU-HOSTNAME.dns-replaceme.example.com&quot;&lt;br&gt;⚠️ Descobrir o hostname em: Apigee → Administração → Environment Groups" vertex="1">
+          <mxGeometry height="66" width="800" x="50" y="1200" as="geometry" />
+        </mxCell>
+        <mxCell id="res1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5EE;strokeColor=#0F6E56;fontColor=#085041;fontSize=12;arcSize=8;" value="&lt;b&gt;✅ Sucesso — HTTP 200&lt;/b&gt;&lt;br&gt;clientCertSubject preenchido com CN=my-client&lt;br&gt;Apigee apresentou o certificado ao server" vertex="1">
+          <mxGeometry height="66" width="380" x="50" y="1290" as="geometry" />
+        </mxCell>
+        <mxCell id="res2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAEEDA;strokeColor=#854F0B;fontColor=#412402;fontSize=12;arcSize=8;" value="&lt;b&gt;❌ Falha — verificar&lt;/b&gt;&lt;br&gt;SSL Handshake failed → checar SAN do server.pfx&lt;br&gt;404 → checar path (Apigee faz strip do BasePath)&lt;br&gt;503 → checar Cloud NAT e URL do ngrok no Target" vertex="1">
+          <mxGeometry height="66" width="380" x="470" y="1290" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
