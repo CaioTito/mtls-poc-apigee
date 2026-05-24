@@ -1,6 +1,6 @@
 # POC mTLS — Apigee X Privado
 
-Prova de conceito de **mTLS (mutual TLS)** usando Apigee X como proxy, simulando o cenário real de ambientes **zero trust** em que toda comunicação entre serviços exige autenticação mútua por certificado — sem depender de rede privada ou IP de origem como garantia de identidade.
+Prova de conceito de **mTLS (mutual TLS)** usando Apigee X como proxy, simulando o cenário real de ambientes **zero trust** em que toda comunicação entre serviços exige autenticação mútua por certificado
 
 ## Fluxo validado
 
@@ -24,14 +24,14 @@ mTLS-POC/
 ├── README.md
 │
 ├── Certificados/
-│   ├── ca.cert                       # Certificado público da CA (sem risco)
-│   ├── client.cert                   # Certificado público do cliente (sem risco)
-│   ├── server.cert                   # Certificado público do servidor (sem risco)
+│   ├── ca.cert                       # Certificado público da CA
+│   ├── client.cert                   # Certificado público do cliente
+│   ├── server.cert                   # Certificado público do servidor
 │   ├── san.ext                       # Extensão SAN para o server.pfx
 │   ├── gerar-certificados.sh         # Script: CA + cliente
 │   └── gerar-certificados-server.sh  # Script: servidor com SAN do ngrok
 │
-├── MtlsServer/                       # ASP.NET Core — servidor que valida mTLS
+├── MtlsServer/                       
 │   ├── Program.cs
 │   ├── MtlsServer.csproj
 │   ├── MtlsServer.sln
@@ -40,11 +40,11 @@ mTLS-POC/
 │       └── launchSettings.json
 │
 ├── Apigee/
-│   ├── proxy-endpoint.xml            # Configuração do Proxy Endpoint (BasePath /mtls)
-│   └── target-endpoint.xml          # Configuração do Target Endpoint com SSLInfo
+│   ├── proxy-endpoint.xml            
+│   └── target-endpoint.xml          
 │
 └── docs/
-    └── mtls-poc-completa.drawio      # Fluxograma completo da POC
+    └── mtls-poc-completa.drawio      
 ```
 
 > **Segurança:** arquivos `.key`, `.pfx`, `.p12`, `.csr` e `.srl` estão no `.gitignore` e nunca devem ser commitados. Só os certificados **públicos** (`.cert`) e os scripts ficam no repositório.
@@ -110,7 +110,7 @@ dotnet run
 
 O Kestrel sobe na porta `5000` com HTTPS, exigindo certificado cliente (`ClientCertificateMode = RequireCertificate`).
 
-**Endpoint disponível:** `GET /` (raiz — o Apigee faz strip do BasePath `/mtls` antes de encaminhar)
+**Endpoint disponível:** `GET /`
 
 Resposta de exemplo:
 
